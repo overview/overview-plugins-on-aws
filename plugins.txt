@@ -1,2 +1,3 @@
 # Sorted list of plugin ports, names, and memory limits (in MB)
 3001 overview-entity-filter 4000
+3002 overview-word-cloud 1000
