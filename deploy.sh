@@ -2,6 +2,8 @@
 #
 # Usage: see README.md
 
+set -e
+
 DIR="$(dirname "$0")"
 CLUSTER=plugins
 LOAD_BALANCER_NAME=plugins
