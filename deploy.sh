@@ -85,6 +85,7 @@ update_service() {
     --cluster "$CLUSTER" \
     --service "$NAME" \
     --task-definition "$NAME" \
+    --desired-count 1 \
     >/dev/null
 }
 
