@@ -1,4 +1,5 @@
 # Sorted list of plugin ports, names, and memory limits (in MB)
+3000 overview-heartbeat 20
 3001 overview-entity-filter 4000
 3002 overview-word-cloud 1000
 3003 overview-grep 200

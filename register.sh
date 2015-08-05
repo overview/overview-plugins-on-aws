@@ -13,7 +13,7 @@ if [ -z "$NAME" ] \
   || [ -z "$MEMORY_LIMIT" ] \
   || [ "$PORT" -lt 3000 ] \
   || [ "$PORT" -gt 3999 ] \
-  || [ "$MEMORY_LIMIT" -lt 100 ] \
+  || [ "$MEMORY_LIMIT" -lt 20 ] \
   || [ "$MEMORY_LIMIT" -gt 5000 ]; then
 
   echo >&2 "Usage: $0 [name] [port] [memory_limit]"
@@ -21,7 +21,7 @@ if [ -z "$NAME" ] \
   echo >&2 "Where:"
   echo >&2 "  [name] is a single word with no spaces"
   echo >&2 "  [port] is an integer between 3000 and 3999"
-  echo >&2 "  [memory_limit] is an integer between 100 and 5000 (megabytes)"
+  echo >&2 "  [memory_limit] is an integer between 20 and 5000 (megabytes)"
   exit 1
 fi
 
