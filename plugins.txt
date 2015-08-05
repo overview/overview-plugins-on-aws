@@ -3,3 +3,4 @@
 3001 overview-entity-filter 4000
 3002 overview-word-cloud 1000
 3003 overview-grep 200
+3004 overview-file-browser 150
