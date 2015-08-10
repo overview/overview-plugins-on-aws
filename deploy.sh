@@ -80,13 +80,42 @@ create_service() {
 update_service() {
   NAME=$1
 
-  # Tell ECS to use the latest version of the task definition
+  # Assume we don't have enough resources to actually run the task twice. For
+  # Overview, the limiting resource is ports: only one version of the task can
+  # run at a time because we have only one instance in EC2 and our port numbers
+  # are hard-coded; for rolling deploys, we'd be better off just paying for a
+  # second instance instead of spending the developer time making things work on
+  # a single instance.
+
+  # We print to stdout because this is fragile. It's important the developer
+  # know when the service is offline -- especially if the new version of the
+  # task doesn't start up as expected.
+
+  >&2 echo "Updating task definition..."
   aws ecs update-service \
     --cluster "$CLUSTER" \
     --service "$NAME" \
     --task-definition "$NAME" \
     --desired-count 1 \
     >/dev/null
+
+  >&2 echo "Finding old version of the task..."
+  task=$(aws ecs list-tasks \
+    --cluster "$CLUSTER" \
+    --service-name "$NAME" \
+    --query taskArns[0] \
+    --output text)
+
+  >&2 echo "Stopping old version of the task..."
+  aws ecs stop-task \
+    --cluster "$CLUSTER" \
+    --task "$task" \
+    >/dev/null
+
+  >&2 echo "Waiting for new version to spin up..."
+  aws ecs wait services-stable \
+    --cluster "$CLUSTER" \
+    --services "$NAME"
 }
 
 NAME="$1"
